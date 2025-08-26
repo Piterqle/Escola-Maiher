@@ -1,0 +1,26 @@
+{
+  "name": "escola-maiher",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Piterqle/Escola-Maiher.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Piterqle/Escola-Maiher/issues"
+  },
+  "homepage": "https://github.com/Piterqle/Escola-Maiher#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "path": "^0.12.7",
+    "path-to-regexp": "^6.3.0",
+    "sqlite3": "^5.1.7"
+  }
+}
