@@ -6,10 +6,10 @@ const port = 4000;
 app.use(express.json());
 
 // Rotas API (comente/descomente se tiver)
-//app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/usuarios', require('./routes/usuarios'));
 
 // Servir React build
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname, "../cli ent/dist")));
 
 // React SPA fallback
 app.get("*", (req, res) => {
