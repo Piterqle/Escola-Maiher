@@ -9,14 +9,11 @@ app.use(express.json());
 app.use('/api/usuarios', require('./routes/usuarios'));
 
 // Servir React build
-app.use(express.static(path.join(__dirname, "../cli ent/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // React SPA fallback
 app.get("*", (req, res) => {
-    console.log("Requisição para:", req.path);
-    if (!req.path.startsWith("/")) {
-        return res.status(400).send("Rota inválida");
-    }
+    console.log("Rota SPA:", req.path);
     res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
 });
 

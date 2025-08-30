@@ -7,7 +7,6 @@ function Login() {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const handleFlip = () => {
-        console.log("Clicou no botão de flip");
         setIsFlipped(!isFlipped);
     }
     return (
