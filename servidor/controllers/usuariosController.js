@@ -2,25 +2,28 @@ const { insert, select } = require('../database')
 
 
 const cadastro = async (req, res) => {
+    console.log('Requisição de cadastro recebida:', req.body);
     try {
-        const { nome, email, senha, data } = req.body;
-        if (!nome || !email || !senha || !data) {
+        const { nome, email, senha, data_nascimento }  = req.body;
+        if (nome == '' || email == '' || senha == '' || data_nascimento == '') {
             return res.status(500).json({
                 type: 'erro',
                 messagem: "Campos Inválidos"
             })
         };
-        const alreadyUser = await select('Pessoas', 'WHERE email = ?', [email])
+        const alreadyUser = await select('Pessoas', ['*'], 'WHERE email = ?', [email])
         if (alreadyUser.length > 0) {
             return res.status(200).json({
                 type: 'error',
                 messagem: 'Email já cadastrado'
             })
         }
-        await insert('Pessoas', ['nome', 'email', 'senha', 'data_nascimento', 'cargo'], [nome, email, senha, data, true])
+        const newIdUser = await select('Pessoas', ['id'], 'ORDER BY id DESC LIMIT 1', [])
+        await insert('Pessoas', ['nome', 'email', 'senha', 'data_nascimento', 'cargo'], [nome, email, senha, data_nascimento, true])
         res.status(200).json({
             type: 'sucess',
-            messagem: "Cadastrado com Sucesso"
+            messagem: "Cadastrado com Sucesso",
+            id: newIdUser[0].id + 1
         })
     } catch (error) {
         console.log(error)

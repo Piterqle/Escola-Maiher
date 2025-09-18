@@ -18,6 +18,9 @@
   "homepage": "https://github.com/Piterqle/Escola-Maiher#readme",
   "description": "",
   "dependencies": {
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "espress": "^0.0.0",
     "express": "^4.21.2",
     "path": "^0.12.7",
     "path-to-regexp": "^6.3.0",
