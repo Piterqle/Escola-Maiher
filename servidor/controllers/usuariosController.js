@@ -37,14 +37,14 @@ const cadastro = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { matricula, senha } = req.body
-
-        if (!matricula || !senha) {
+        console.log('Requisição de login recebida:', req.body);
+        if (matricula == '' || senha == '') {
             return res.status(500).json({
                 type: 'erro',
                 messagem: 'Preencha os campos'
             })
         }
-        const User = await select('Pessoas', 'where id = ?', [matricula])
+        const User = await select('Pessoas', ['*'], 'where id = ?', [parseInt(matricula)])
         if (User.length > 0) {
             return res.status(200).json({
                 type: 'sucess',
@@ -52,7 +52,7 @@ const login = async (req, res) => {
                 data: User[0]
             })
         }
-        return res.status(404).json({
+        return res.status(200).json({
             type: 'erro',
             messagem: 'Usuário não Cadastrado'
         })

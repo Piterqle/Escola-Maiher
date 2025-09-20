@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from '../../pictures/Logo.png'
+import logo from '../../assets/pictures/logo.png'
 import './style.css'
 import axios from "axios";
 
@@ -18,6 +18,11 @@ function Login() {
     const [senha, setSenha] = useState('');
     const [dataNascimento, setDataNascimento] = useState('');
 
+    // Estados para os campos do formulário de login
+    const [matriculaLogin, setMatriculaLogin] = useState('');
+    const [senhaLogin, setSenhaLogin] = useState('');
+
+    // Função para lidar com o envio do formulário de cadastro
     const handleCadastro = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -48,6 +53,31 @@ function Login() {
         }
     }
 
+    // Função para lidar com o envio do formulário de login
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();   
+        formData.append('matricula', matriculaLogin);
+        formData.append('senha', senhaLogin);
+        try{
+            const response = await axios.post(`/api/usuarios/login`, formData, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            console.log('Resposta do servidor:', response.data);
+            if (response.data.type === 'success') {
+                alert('Login realizado com sucesso!');
+                cookieStore.set('matricula', response.data.id);
+                setMatriculaLogin('');
+                setSenhaLogin('');
+                setIsFlipped(false);
+                return;
+            }
+        } catch (error) {
+            console.error('Erro ao conectar usuário:', error);
+        }
+    }
     // Estado para controlar a rotação do cartão
     const [isFlipped, setIsFlipped] = useState(false);
 
@@ -67,12 +97,12 @@ function Login() {
                         <hr />
                         <form>
                             <div className="mb-3">
-                                <input type="text" className="form-control" id="matriculaLogin" placeholder="Matricula" required />
+                                <input type="text" className="form-control" value={matriculaLogin} onChange={(e) => setMatriculaLogin(e.target.value)} id="matriculaLogin" placeholder="Matricula" required />
                             </div>
                             <div className="mb-3">
-                                <input type="password" className="form-control" id="senhaLogin" placeholder="Senha" required />
+                                <input type="password" className="form-control" value={senhaLogin} onChange={(e) => setSenhaLogin(e.target.value)} id="senhaLogin" placeholder="Senha" required />
                             </div>
-                            <button type="submit" className="btn btn-warning w-100 btn_entrar   ">Entrar</button>
+                            <button type="button" className="btn btn-warning w-100 btn_entrar   " onClick={handleLogin}>Entrar</button>
                         </form>
                         <div class="text-center mt-3">
                             <button type="button" id="btn_singUp" className="btn btn-link" onClick={handleFlip} >Cadastrar-se</button>

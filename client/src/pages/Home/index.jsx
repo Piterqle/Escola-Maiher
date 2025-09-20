@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import logo from '../../pictures/Logo.png'
+import logo from '../../assets/pictures/Logo.png'
 import './style.css'
-import imagem from '../../pictures/turma1.jpg'
+import imagem from '../../assets/pictures/turma1.jpg'
 
 function Home() {
   useEffect(() => {
