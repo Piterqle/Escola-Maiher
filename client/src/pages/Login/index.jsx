@@ -2,6 +2,7 @@ import { useState } from "react";
 import logo from '../../assets/pictures/logo.png'
 import './style.css'
 import axios from "axios";
+import { data } from "react-router-dom";
 
 function Login() {
     const url = window.location.href;
@@ -31,6 +32,14 @@ function Login() {
         formData.append('senha', senha);    
         formData.append('data_nascimento', dataNascimento);
         console.log('Dados do formulário:', { nome, email, senha, dataNascimento });
+        if (!nome || !email || !senha || !dataNascimento) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
+        if (dataNascimento < minDate || dataNascimento > maxDate){
+            alert(`A idade deve estar entre ${minAge} e ${maxAge} anos.`);
+            return;
+        }
         try {
             const response = await axios.post(`/api/usuarios/cadastro`, formData, {
                 headers: {
