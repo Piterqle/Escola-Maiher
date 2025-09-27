@@ -24,9 +24,9 @@ import dançaUrbana from '../../assets/pictures/escmaihermenezes_549211922_18529
 function Home() {
   const listImagens = [imagem1, imagem2, imagem3]
   const listCursos = [
-    { id: 1, title: "Dança do Ventre", image: dançaVentre, description:"Dança do Ventre: muito além da técnica, é expressão, leveza e conexão com o próprio corpo! ✨" },
-    { id: 2, title: "Dança de Salão", image: dançaSalão, description: "Dança de salão é conexão, diversão, autoestima. É um espaço onde você pode ser quem é, se expressar e descobrir uma nova forma de cuidar de si do corpo, da mente e do coração." },
-    { id: 3, title: "Dança Urbana", image: dançaUrbana, description: "Dança urbana é liberdade, criatividade e expressão. É um convite para se mover e se conectar com a música e a cultura de rua." },
+    { id: 1, title: "Dança do Ventre", image: dançaVentre, count: '10/10',description:"Dança do Ventre: muito além da técnica, é expressão, leveza e conexão com o próprio corpo! ✨" },
+    { id: 2, title: "Dança de Salão", image: dançaSalão, count: '8/10', description: "Dança de salão é conexão, diversão, autoestima. É um espaço onde você pode ser quem é, se expressar e descobrir uma nova forma de cuidar de si do corpo, da mente e do coração." },
+    { id: 3, title: "Dança Urbana", image: dançaUrbana, count: '9/10', description: "Dança urbana é liberdade, criatividade e expressão. É um convite para se mover e se conectar com a música e a cultura de rua." },
   ]
   useEffect(() => {
     const handleScroll = () => {
@@ -113,11 +113,13 @@ function Home() {
               {listCursos.map((curso, i) => (
                 console.log(curso, i),
                 <div className="col-md-4" key={i}>
-                  <div className="card shadow mb-3">
-                    <img src={curso.image} className="card-img-top" alt={curso.title} />
-                    <div className="card-body">
+                  <div className="card cardDance shadow mb-3" style={{ height: '670px' }}>
+                    <img src={curso.image}  className="card-img-top" alt={curso.title} />
+                    <div className="card-body card-overlay p-3">
                       <h5 className="card-title">{curso.title}</h5>
                       <p className="card-text">{curso.description}</p>
+                      <p className='card-text mt-5'><i className='bi bi-person-fill'></i>{curso.count}</p>
+                      <a href="#contact" className="link-text">Quero me inscrever!</a>
                     </div>
                   </div>
                 </div>

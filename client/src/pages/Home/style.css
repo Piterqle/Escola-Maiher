@@ -53,3 +53,50 @@
   padding: 20px 0;
   text-align: center;
 }
+.cardDance {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.cardDance img {
+  width: 100%;
+  display: block;
+}
+
+/* Texto escondido embaixo */
+.card-overlay {
+  position: absolute;
+  bottom: -75.9%;   /* começa fora do card */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.95); 
+  color: #333;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+
+  transition: bottom 0.5s ease;
+}
+
+/* No hover o texto sobe */
+.cardDance:hover .card-overlay {
+  bottom: 0;
+  justify-content: center;
+}
+
+.link-text {
+  color: #007BFF; /* cor do texto */
+  text-decoration: none; /* remove underline padrão */
+  font-weight: 600; /* deixa o texto mais marcante */
+  transition: all 0.3s ease; /* efeito suave para hover */
+}
+
+.link-text:hover {
+  color: #0056b3; /* muda a cor ao passar o mouse */
+  text-decoration: underline; /* pode adicionar underline no hover */
+  cursor: pointer;
+}
