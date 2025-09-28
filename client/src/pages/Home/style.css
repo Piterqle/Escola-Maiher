@@ -1,5 +1,7 @@
 :root {
   background-color: #ffffff;
+  --swiper-navigation-color: #ffffff;
+  --swiper-pagination-color: #ffffff;
 }
 
 .home-container {
@@ -12,15 +14,85 @@
 }
 
 .hero-section {
+  position: relative;
   width: 100%;
+  height: 100vh;
   overflow: hidden;
 }
 
-.img{
+.hero-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: relative;
   width: 100%;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+  position: absolute;
+  color: #fff;
+  max-width: 700px;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 1s ease;
+}
+
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(-40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content.animate {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+.btn-cta {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #e91e63;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.btn-cta:hover {
+  background: #c2185b;
+  transform: scale(1.05);
+}
+
 .navbar {
   transition: background-color 0.7s ease, box-shadow 0.5s ease;
 }
@@ -99,4 +171,9 @@
   color: #0056b3; /* muda a cor ao passar o mouse */
   text-decoration: underline; /* pode adicionar underline no hover */
   cursor: pointer;
+}
+
+.video-wrapper {
+  width: 300px;
+  margin: 0px auto;
 }

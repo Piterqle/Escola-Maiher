@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './style.css'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -7,6 +7,8 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 import logo from '../../assets/pictures/Logo.png'
 
@@ -15,19 +17,43 @@ import imagem1 from '../../assets/pictures/turma1.jpg'
 import imagem2 from '../../assets/pictures/turma2.jpg'
 import imagem3 from '../../assets/pictures/turma3.jpg'
 
-
+import escVideo from '../../assets/videos/escmaihermenezes.mp4'
 
 import dançaVentre from '../../assets/pictures/escmaihermenezes_527603948_18522190966012309_7653454382418711804_n.jpg'
 import dançaSalão from '../../assets/pictures/escmaihermenezes_528507422_18522529801012309_5826010379886604656_n.jpg'
 import dançaUrbana from '../../assets/pictures/escmaihermenezes_549211922_18529982956012309_8887021348960150054_n.jpg'
 
 function Home() {
+  const swiperRef = useRef(null)
+
   const listImagens = [imagem1, imagem2, imagem3]
   const listCursos = [
     { id: 1, title: "Dança do Ventre", image: dançaVentre, count: '10/10',description:"Dança do Ventre: muito além da técnica, é expressão, leveza e conexão com o próprio corpo! ✨" },
     { id: 2, title: "Dança de Salão", image: dançaSalão, count: '8/10', description: "Dança de salão é conexão, diversão, autoestima. É um espaço onde você pode ser quem é, se expressar e descobrir uma nova forma de cuidar de si do corpo, da mente e do coração." },
     { id: 3, title: "Dança Urbana", image: dançaUrbana, count: '9/10', description: "Dança urbana é liberdade, criatividade e expressão. É um convite para se mover e se conectar com a música e a cultura de rua." },
   ]
+
+  const handleOnSwiper = (swiper) => {
+    swiperRef.current = swiper;
+  }
+
+  const handleSlideChange = () => {
+    const swiper = swiperRef.current;
+    if (!swiper) return;
+
+    const activeSlide = document.querySelector(".swiper-slide-active");
+    if (!activeSlide) return;
+
+    const content = activeSlide.querySelector(".hero-content");
+    if (!content) return;
+
+    // remove e reaplica a classe com pequeno delay
+    content.classList.remove("animate");
+    setTimeout(() => {
+      content.classList.add("animate");
+    }, 50); // 50ms é suficiente para reiniciar
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const navbar = document.getElementById('navbar');
@@ -72,24 +98,36 @@ function Home() {
           
      
         <a id="home"></a>
-        <section className="hero-section" style={{backgroundColor: '#000'}}>
-          <Swiper 
+        <section className="hero-section bg-black">
+          <Swiper
             modules={[Autoplay, Pagination, Navigation]}
-            spaceBetween={30}
-            effect={'fade'}
-            centeredSlides={true}
-            loop={true}
+            spaceBetween={0}
+            effect="fade"
+            centeredSlides
+            loop
             pagination={{ clickable: true }}
-            navigation={true}
-            autoplay={{ delay: 5000, disableOnInteraction: false }} 
+            navigation
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            onSwiper={handleOnSwiper} // 🔥 referencia do swiper
+            onSlideChange={handleSlideChange} // 🔥 atualiza ao trocar slide
+            className="hero-swiper"
           >
             {listImagens.map((image, index) => (
               <SwiperSlide key={index}>
-                <img src={image} alt={`Slide ${index + 1}`} className="img" />
+                <div className="hero-slide">
+                  <img src={image} alt={`Slide ${index + 1}`} className="hero-img" />
+                  <div className="overlay"></div>
+                  <div className="hero-content animate">
+                    <h1>Quem dança é mais feliz</h1>
+                    <p>A maior e mais diversificada escola de dança de Divinópolis</p>
+                    <a href="#contato" className="btn-cta">Quero me inscrever!</a>
+                  </div>
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
         </section>
+
         <a id='about'></a>
         <section className="py-5">
           <div className="container card shadow p-4" data-aos="fade-up" data-aos-duration="1000">
@@ -111,13 +149,13 @@ function Home() {
             <h2 className="section-title text-center">Nossas Aulas</h2>
             <div className="row">
               {listCursos.map((curso, i) => (
-                console.log(curso, i),
                 <div className="col-md-4" key={i}>
-                  <div className="card cardDance shadow mb-3" style={{ height: '670px' }}>
+                  <div className="card cardDance shadow mb-3" style={{ height: '700px' }}>
                     <img src={curso.image}  className="card-img-top" alt={curso.title} />
-                    <div className="card-body card-overlay p-3">
+                    <div className="card-body card-overlay p-2">
                       <h5 className="card-title">{curso.title}</h5>
                       <p className="card-text">{curso.description}</p>
+                      <div className='mt-4'></div> {/* espaço entre descrição e vagas */}
                       <p className='card-text mt-5'><i className='bi bi-person-fill'></i>{curso.count}</p>
                       <a href="#contact" className="link-text">Quero me inscrever!</a>
                     </div>
@@ -127,6 +165,30 @@ function Home() {
             </div>
           </div>
         </section>
+
+        <section className="py-5">
+    <div className="container card shadow p-4" data-aos="fade-up" data-aos-duration="1000">
+      <h2 className="section-title text-center mb-4">Nosso Espaço</h2>
+
+      <div className="video-wrapper card shadow-sm">
+        <video
+          controls
+          muted
+          loop
+          playsInline
+          style={{
+            height: "70vh",
+            objectFit: "cover",
+            display: "block",
+          }}
+        >
+          <source src={escVideo} type="video/mp4" />
+          Seu navegador não suporta o vídeo.
+        </video>
+      </div>
+    </div>
+</section>
+
 
         <section className="py-5">
           <div className="container card shadow p-4" data-aos="fade-up" data-aos-duration="1000">
